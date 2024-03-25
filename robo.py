@@ -5,11 +5,15 @@ from selenium.webdriver.chrome.service import Service
 #utilizar comandos usando teclas
 from selenium.webdriver.common.keys import Keys
 
+from selenium.webdriver.common.by import By
+
 #usar para esperar entre as ações definidas
 import pyautogui as tempoPausa
 import pyautogui as atalhoTeclasTeclado
 
-from selenium.webdriver.common.by import By
+import xlsxwriter
+import os
+
 
 #instala versão atual do webdriver do navegador(no caso, chrome)
 servico = Service(ChromeDriverManager().install())
@@ -71,7 +75,29 @@ valorEuro = navegador.find_elements(By.XPATH, '//*[@id="knowledge-currency__upda
 
 print(valorEuro)
 
+#------------------------- Inserindo os valores do Dolar e Euro no Excel ----------------------------
 
+mensagem_final = "acabou de rodar"
+
+#cria um arquivo .xlsx no caminho indicado e o nome expecificado
+nomeCaminhoArquivo = "E:\\testando.xlsx"
+planilhaCriada = xlsxwriter.Workbook(nomeCaminhoArquivo)
+sheet1 = planilhaCriada.add_worksheet()
+
+#cria a planilha e popula
+sheet1.write("A1", "Dolar")
+sheet1.write("A2", valorDolar)
+sheet1.write("B1", "Euro")
+sheet1.write("B2", valorEuro)
+
+
+planilhaCriada.close()
+
+
+#abre o arquivo criado, no caso, "testando.xlsx"
+os.startfile(nomeCaminhoArquivo)
+
+print(f'O programa {mensagem_final} ...')
 
 
 
