@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 import pyautogui as tempoPausa
 import pyautogui as atalhoTeclasTeclado
 
+#imports do excel
 import xlsxwriter
 import os
 
@@ -24,6 +25,7 @@ navegador = webdriver.Chrome(service = servico)
 #abre o navegador
 navegador.get("https://google.com/")
 
+#------------------- Buscando valor do Dolar ----------------
 
 tempoPausa.sleep(4)
 
@@ -42,7 +44,7 @@ valorDolar = navegador.find_elements(By.XPATH, '//*[@id="knowledge-currency__upd
 print(valorDolar)
 
 
-#-----------------------------------
+#------------------- Buscando valor do Euro ----------------
 
 tempoPausa.sleep(2)
 
@@ -89,6 +91,20 @@ sheet1.write("A1", "Dolar")
 sheet1.write("A2", valorDolar)
 sheet1.write("B1", "Euro")
 sheet1.write("B2", valorEuro)
+
+
+#mudar virgula para ponto para evitar erro no ao converter  para float
+valorDolar = valorDolar.replace(',' , '.')
+valorEuro = valorEuro.replace(',' , '.')
+
+
+#converter os valores de texto para float
+valor_dolar = float(valorDolar)
+valor_euro = float(valorEuro)
+
+#Inserindo valores como float
+sheet1.write("A3", valorDolar)
+sheet1.write("B3", valorEuro)
 
 
 planilhaCriada.close()
